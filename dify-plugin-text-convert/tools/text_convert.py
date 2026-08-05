@@ -42,7 +42,22 @@ def _read_blob(file: Any) -> bytes:
     raise ValueError("unsupported file blob type")
 
 
-class ConvertToMarkdownTool(Tool):
+def _friendly_error(exc: BaseException, *, fmt: str | None, extension: str) -> str:
+    message = str(exc)
+    is_pdf = (fmt == "pdf") or (extension == "pdf")
+    lowered = message.lower()
+    if is_pdf and any(
+        token in lowered
+        for token in ("unsupported", "ocr", "image", "scan", "no text", "empty")
+    ):
+        return (
+            f"{message}. "
+            "Scanned or image-only PDFs are not supported (this tool has no OCR)."
+        )
+    return message
+
+
+class TextConvertTool(Tool):
     def _invoke(
         self, tool_parameters: dict[str, Any]
     ) -> Generator[ToolInvokeMessage, None, None]:
@@ -73,14 +88,15 @@ class ConvertToMarkdownTool(Tool):
         for file in files:
             filename = getattr(file, "filename", None) or "unnamed"
             extension = _file_extension(file)
+            fmt: str | None = None
 
             try:
                 data = _read_blob(file)
                 fmt = _resolve_format(data, extension)
                 if fmt is None:
                     raise ValueError(
-                        "unrecognized file format; provide a supported extension "
-                        "(e.g. csv, docx, pdf)"
+                        "unrecognized file format; supported extensions include "
+                        "doc/docx/ppt/pptx/xls/xlsx/odt/ods/odp/rtf/epub/csv/pdf"
                     )
 
                 markdown = anydoc.to_markdown_bytes(data, fmt)
@@ -103,14 +119,15 @@ class ConvertToMarkdownTool(Tool):
                     },
                 )
             except Exception as exc:  # noqa: BLE001 - surface conversion failures to Dify
-                error_msg = f"Error converting {filename}: {exc}"
+                detail = _friendly_error(exc, fmt=fmt, extension=extension)
+                error_msg = f"Error converting {filename}: {detail}"
                 yield self.create_text_message(error_msg)
                 results.append(
                     {
                         "filename": filename,
-                        "format": extension or "",
+                        "format": fmt or extension or "",
                         "status": "error",
-                        "error": str(exc),
+                        "error": detail,
                     }
                 )
 
