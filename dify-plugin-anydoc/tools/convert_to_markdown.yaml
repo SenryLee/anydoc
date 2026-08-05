@@ -1,0 +1,62 @@
+identity:
+  name: convert_to_markdown
+  author: senrylee
+  label:
+    en_US: Convert to Markdown
+    zh_Hans: 转换为 Markdown
+    ja_JP: Markdown に変換
+    pt_BR: Converter para Markdown
+description:
+  human:
+    en_US: Convert Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and PDF files to GitHub-Flavored Markdown.
+    zh_Hans: 将 Word、PowerPoint、Excel、OpenDocument、RTF、EPUB、CSV、PDF 转换为 GitHub Flavored Markdown。
+    ja_JP: Word、PowerPoint、Excel、OpenDocument、RTF、EPUB、CSV、PDF を GitHub Flavored Markdown に変換します。
+    pt_BR: Converte arquivos Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV e PDF para GitHub Flavored Markdown.
+  llm: Convert uploaded office documents, spreadsheets, presentations, EPUB, CSV, or PDF files into clean GitHub-Flavored Markdown text. Use when the user provides a document file and you need its textual content.
+parameters:
+  - name: files
+    type: files
+    required: true
+    label:
+      en_US: Files
+      zh_Hans: 文件
+      ja_JP: ファイル
+      pt_BR: Arquivos
+    human_description:
+      en_US: Documents to convert (.doc, .docx, .ppt, .pptx, .xls, .xlsx, .odt, .ods, .odp, .rtf, .epub, .csv, .pdf, and related variants).
+      zh_Hans: 待转换的文档（支持 .doc/.docx/.ppt/.pptx/.xls/.xlsx/.odt/.ods/.odp/.rtf/.epub/.csv/.pdf 及常见变体）。
+      ja_JP: 変換する文書（.doc/.docx/.ppt/.pptx/.xls/.xlsx/.odt/.ods/.odp/.rtf/.epub/.csv/.pdf など）。
+      pt_BR: Documentos a converter (.doc, .docx, .ppt, .pptx, .xls, .xlsx, .odt, .ods, .odp, .rtf, .epub, .csv, .pdf e variantes).
+    llm_description: One or more document files to convert to Markdown.
+    form: llm
+output_schema:
+  type: object
+  properties:
+    status:
+      type: string
+      description: overall conversion status (success or error)
+    total_files:
+      type: integer
+      description: number of input files
+    successful_conversions:
+      type: integer
+      description: number of files converted successfully
+    results:
+      type: array
+      description: per-file conversion results
+      items:
+        type: object
+        properties:
+          filename:
+            type: string
+          format:
+            type: string
+          markdown:
+            type: string
+          status:
+            type: string
+          error:
+            type: string
+extra:
+  python:
+    source: tools/convert_to_markdown.py
