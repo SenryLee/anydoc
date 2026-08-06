@@ -1,0 +1,35 @@
+version: 0.1.0
+type: plugin
+author: senrylee
+name: text_convert
+label:
+  en_US: Text Convert
+  zh_Hans: 文本转化
+  ja_JP: テキスト変換
+  pt_BR: Conversão de Texto
+description:
+  en_US: Fast local conversion of Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and text-based PDF into clean Markdown. Typical conversion finishes in single-digit milliseconds. Scanned or image-only PDFs are not supported (no OCR).
+  zh_Hans: 在本地快速将 Word、PowerPoint、Excel、OpenDocument、RTF、EPUB、CSV 与文本型 PDF 转为干净的 Markdown，常见文档转换耗时通常在数毫秒级。扫描件或纯图片 PDF 不支持（无 OCR）。
+  ja_JP: Word、PowerPoint、Excel、OpenDocument、RTF、EPUB、CSV、テキスト PDF を高速に Markdown へ変換します（通常は数ミリ秒）。スキャン PDF / 画像のみの PDF は非対応（OCR なし）。
+  pt_BR: Conversão local e rápida de Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV e PDF com texto para Markdown limpo (geralmente em milissegundos). PDFs digitalizados ou só imagem não são suportados (sem OCR).
+icon: icon.svg
+resource:
+  memory: 268435456
+  permission:
+    tool:
+      enabled: true
+plugins:
+  tools:
+    - provider/text_convert.yaml
+meta:
+  version: 0.1.0
+  arch:
+    - amd64
+    - arm64
+  runner:
+    language: python
+    version: "3.12"
+    entrypoint: main
+created_at: 2026-08-05T03:43:00+00:00
+privacy: PRIVACY.md
+verified: false

@@ -1,0 +1,102 @@
+identity:
+  name: text_convert
+  author: senrylee
+  label:
+    en_US: Text Convert
+    zh_Hans: 文本转化
+    ja_JP: テキスト変換
+    pt_BR: Conversão de Texto
+description:
+  human:
+    en_US: >
+      Convert office documents to clean GitHub-Flavored Markdown locally and quickly
+      (typically single-digit milliseconds per file).
+      Supported formats: Word (.doc/.docx/.docm), PowerPoint (.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm),
+      Excel (.xls/.xlsx/.xlsm/.xlsb), OpenDocument (.odt/.ods/.odp), RTF, EPUB, CSV, and text-based PDF.
+      Limitation: scanned or image-only PDFs are not supported because this tool has no OCR.
+    zh_Hans: >
+      在本地将办公文档快速转换为干净的 GitHub Flavored Markdown（单文件常见耗时通常为数毫秒级）。
+      支持格式：Word（.doc/.docx/.docm）、PowerPoint（.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm）、
+      Excel（.xls/.xlsx/.xlsm/.xlsb）、OpenDocument（.odt/.ods/.odp）、RTF、EPUB、CSV，以及带文字层的 PDF。
+      限制：扫描件或纯图片 PDF 不支持（本工具无 OCR，无法识别图片中的文字）。
+    ja_JP: >
+      オフィス文書をローカルで高速に GitHub Flavored Markdown へ変換します（通常は数ミリ秒/ファイル）。
+      対応形式：Word（.doc/.docx/.docm）、PowerPoint（.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm）、
+      Excel（.xls/.xlsx/.xlsm/.xlsb）、OpenDocument（.odt/.ods/.odp）、RTF、EPUB、CSV、テキスト PDF。
+      制限：スキャン PDF / 画像のみの PDF は非対応（OCR なし）。
+    pt_BR: >
+      Converte documentos de escritório em Markdown (GFM) localmente e com alta velocidade
+      (geralmente milissegundos por arquivo).
+      Formatos suportados: Word (.doc/.docx/.docm), PowerPoint (.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm),
+      Excel (.xls/.xlsx/.xlsm/.xlsb), OpenDocument (.odt/.ods/.odp), RTF, EPUB, CSV e PDF com texto.
+      Limitação: PDFs digitalizados ou só imagem não são suportados (sem OCR).
+  llm: >
+      Convert uploaded documents into clean GitHub-Flavored Markdown text, locally and quickly
+      (typically a few milliseconds per file). Use when the user provides office documents and you
+      need their textual content as Markdown.
+      Supported inputs: Word (.doc, .docx, .docm), PowerPoint (.ppt, .pps, .pot, .pptx, .pptm, .ppsx, .ppsm),
+      Excel (.xls, .xlsx, .xlsm, .xlsb), OpenDocument (.odt, .ods, .odp), RTF, EPUB, CSV, and text-based PDF.
+      Important limitation: scanned PDFs and image-only PDFs are NOT supported; this tool has no OCR
+      and will fail on those files. Prefer text-layer PDFs or other supported office formats.
+parameters:
+  - name: files
+    type: files
+    required: true
+    label:
+      en_US: Files
+      zh_Hans: 文件
+      ja_JP: ファイル
+      pt_BR: Arquivos
+    human_description:
+      en_US: >
+        Documents to convert. Supported: .doc/.docx/.docm, .ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm,
+        .xls/.xlsx/.xlsm/.xlsb, .odt/.ods/.odp, .rtf, .epub, .csv, text-based .pdf.
+        Scanned/image-only PDFs are not supported (no OCR).
+      zh_Hans: >
+        待转换的文档。支持：.doc/.docx/.docm、.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm、
+        .xls/.xlsx/.xlsm/.xlsb、.odt/.ods/.odp、.rtf、.epub、.csv，以及带文字层的 .pdf。
+        扫描件/纯图片 PDF 不支持（无 OCR）。
+      ja_JP: >
+        変換する文書。.doc/.docx/.docm、.ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm、
+        .xls/.xlsx/.xlsm/.xlsb、.odt/.ods/.odp、.rtf、.epub、.csv、テキスト .pdf に対応。
+        スキャン PDF は非対応（OCR なし）。
+      pt_BR: >
+        Documentos a converter. Suporta: .doc/.docx/.docm, .ppt/.pps/.pot/.pptx/.pptm/.ppsx/.ppsm,
+        .xls/.xlsx/.xlsm/.xlsb, .odt/.ods/.odp, .rtf, .epub, .csv e .pdf com texto.
+        PDFs digitalizados/só imagem não são suportados (sem OCR).
+    llm_description: >
+      One or more document files to convert to Markdown. Accept Word, PowerPoint, Excel,
+      OpenDocument, RTF, EPUB, CSV, and text-based PDF. Do not send scanned or image-only PDFs;
+      those will fail because there is no OCR.
+    form: llm
+output_schema:
+  type: object
+  properties:
+    status:
+      type: string
+      description: overall conversion status (success or error)
+    total_files:
+      type: integer
+      description: number of input files
+    successful_conversions:
+      type: integer
+      description: number of files converted successfully
+    results:
+      type: array
+      description: per-file conversion results
+      items:
+        type: object
+        properties:
+          filename:
+            type: string
+          format:
+            type: string
+          markdown:
+            type: string
+          status:
+            type: string
+          error:
+            type: string
+extra:
+  python:
+    source: tools/text_convert.py

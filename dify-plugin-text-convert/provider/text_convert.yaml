@@ -1,0 +1,22 @@
+identity:
+  author: senrylee
+  name: text_convert
+  label:
+    en_US: Text Convert
+    zh_Hans: 文本转化
+    ja_JP: テキスト変換
+    pt_BR: Conversão de Texto
+  description:
+    en_US: Fast local document-to-Markdown conversion. Supports Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV, and text-based PDF. Scanned PDFs without a text layer are not supported (no OCR).
+    zh_Hans: 本地快速文档转 Markdown。支持 Word、PowerPoint、Excel、OpenDocument、RTF、EPUB、CSV 与文本型 PDF。无文字层的扫描件 PDF 不支持（无 OCR）。
+    ja_JP: 文書を高速に Markdown へ変換。Word / PowerPoint / Excel / OpenDocument / RTF / EPUB / CSV / テキスト PDF 対応。スキャン PDF は非対応（OCR なし）。
+    pt_BR: Conversão local e rápida de documentos para Markdown. Suporta Word, PowerPoint, Excel, OpenDocument, RTF, EPUB, CSV e PDF com texto. PDFs digitalizados sem camada de texto não são suportados (sem OCR).
+  icon: icon.svg
+  tags:
+    - utilities
+    - productivity
+tools:
+  - tools/text_convert.yaml
+extra:
+  python:
+    source: provider/text_convert.py
