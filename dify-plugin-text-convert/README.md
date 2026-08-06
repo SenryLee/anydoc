@@ -28,13 +28,17 @@
 
 ## 安装
 
-1. 打包插件（在本目录的上一级执行）：
+仓库已附带可直接安装的包：
+
+`dify-plugin-text-convert/dist/text_convert.difypkg`
+
+在 Dify：**集成 → + 安装 → 本地文件**，上传该文件即可。
+
+若需自行重新打包（在本目录的上一级执行）：
 
 ```bash
 dify plugin package ./dify-plugin-text-convert
 ```
-
-得到 `.difypkg` 后，在 Dify：**插件 → 安装插件 → 本地文件**，上传安装。
 
 2. 开发期远程调试：复制 `.env.example` 为 `.env`，填入调试地址与 Key，然后：
 

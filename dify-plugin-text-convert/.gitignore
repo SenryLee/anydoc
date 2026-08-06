@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 .env
 *.difypkg
+!dist/*.difypkg
 .DS_Store
 .idea/
 .vscode/
